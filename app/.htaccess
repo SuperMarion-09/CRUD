@@ -1,0 +1,52 @@
+<!-- <IfModule authz_core_module>
+    Require all denied
+</IfModule>
+<IfModule !authz_core_module>
+    Deny from all
+</IfModule> -->
+<IfModule mod_userdir.c>
+    UserDir "public_html/public" "public_html"
+    UserDir disabled root
+
+    <Directory /home/*/public_html>
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                    # Apache <= 2.2:
+                    # Order allow,deny
+                    # Allow from all
+
+                    # Apache >= 2.4:
+                    Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                    # Apache <= 2.2:
+                    # Order deny,allow
+                    # Deny from all
+
+                    # Apache >= 2.4:
+                    Require all denied
+            </LimitExcept>
+    </Directory>
+
+    <Directory /home/*/public_html/public>
+            AllowOverride All
+            Options MultiViews Indexes FollowSymLinks
+            <Limit GET POST OPTIONS>
+                    # Apache <= 2.2:
+                    # Order allow,deny
+                    # Allow from all
+
+                    # Apache >= 2.4:
+                    Require all granted
+            </Limit>
+            <LimitExcept GET POST OPTIONS>
+                    # Apache <= 2.2:
+                    # Order deny,allow
+                    # Deny from all
+
+                    # Apache >= 2.4:
+                    Require all denied
+            </LimitExcept>
+    </Directory>
+</IfModule>
